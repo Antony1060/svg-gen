@@ -18,6 +18,7 @@ export const handler: FunctionHandler = async (event, context) => {
         const posts = rss.rss.channel.item;
         if(!posts || !Array.isArray(posts)) throw new Error();
 
+
         const rssPost: { title: string, description: string } = posts.find(it => it.link.split("/").at(-1) === post);
         if(!rssPost) throw new Error();
 
