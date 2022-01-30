@@ -27,6 +27,6 @@ app.get("/", (_, res) => {
     res.send({ status: 200 });
 })
 
-app.listen(process.env.PORT || 8080, (err, addr) => {
+app.listen(process.env.PORT || 8080, "0.0.0.0", (err, addr) => {
     logger.net(`Listening on ${addr}`);
 })
