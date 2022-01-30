@@ -16,12 +16,12 @@ const logger = createLogger({
 const app = fastify();
 
 app.register(fastifyCors);
-app.addHook("onRequest", (req, res, next) => {
+app.addHook("onRequest", (req, _, next) => {
     DEBUG && logger.net(`${req.method} on ${req.routerPath}`);
     next();
 });
 
-app.register(PostHandler, { prefix: "/sex" });
+app.register(PostHandler, { prefix: "/" });
 
 app.get("/", (_, res) => {
     res.send({ status: 200 });
