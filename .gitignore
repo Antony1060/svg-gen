@@ -1,5 +1,3 @@
-node_modules
-lambda/
+node_modules/
 
-# Local Netlify folder
-.netlify
+yarn-error.log
