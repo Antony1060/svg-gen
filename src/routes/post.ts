@@ -1,5 +1,4 @@
 import axios from "axios";
-import { XMLParser } from "fast-xml-parser";
 import { FastifyPluginCallback } from "fastify";
 import sharp from "sharp";
 import { Element } from "../lib/Element";
@@ -12,20 +11,10 @@ export const PostHandler: FastifyPluginCallback = (fastify, opts, done) => {
         const query = req.query as any;
         
         try {
-            if(!query.post) throw new Error();
-            const post = query.post;
+            if(!query.title || !query.description) throw new Error();
+            const title = query.title;
+            const description = query.description;
             const type = query.type ?? "svg";
-
-            const rss = new XMLParser().parse((await axios.get("https://antony.computer/rss.xml")).data);
-            
-            const posts = rss.rss.channel.item;
-            if(!posts || !Array.isArray(posts)) throw new Error();
-
-            const rssPost: { title: string, description: string } = posts.find(it => {
-                const split = it.link.split("/");
-                return split[split.length - 1].toLowerCase() === post.toLowerCase();
-            });
-            if(!rssPost) throw new Error();
 
             const svg = new Element("svg", { width: 1200, height: 630 });
 
@@ -89,7 +78,7 @@ export const PostHandler: FastifyPluginCallback = (fastify, opts, done) => {
                 x: 200,
                 y: 280,
                 class: "title"
-            }).addChild(limit(rssPost.title.trim(), 30)));
+            }).addChild(limit(title.trim(), 30)));
 
             // divider
             svg.addChild(new Element("line", {
@@ -105,7 +94,7 @@ export const PostHandler: FastifyPluginCallback = (fastify, opts, done) => {
                 x: 200,
                 y: 350,
                 class: "description"
-            }).addChild(limit(rssPost.description.trim(), 46)));
+            }).addChild(limit(description.trim(), 46)));
 
             res.status(200).headers({
                 "Content-Type": type !== "png" ? "image/svg+xml" : "image/png"
