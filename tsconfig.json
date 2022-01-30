@@ -3,10 +3,12 @@
     "compilerOptions": {
       "esModuleInterop": true,
       "resolveJsonModule": true,
-      "lib": ["es2020"],
+      "lib": ["es2021"],
       "target": "ES6",
+      "module": "CommonJS",
       "downlevelIteration": true,
-      "moduleResolution": "node"
+      "moduleResolution": "node",
+      "outDir": "lambda"
     },
     "exclude": ["node_modules"]
 }

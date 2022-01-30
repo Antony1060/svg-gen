@@ -1,12 +1,14 @@
 import axios from "axios";
 import { XMLParser } from "fast-xml-parser";
+import sharp from "sharp";
 import { FunctionHandler } from "."
+import { LogoBase64 } from "../lib/Base64Images";
 import { Element } from "../lib/Element"
 import { JetBrainsCSS } from "../lib/Fonts";
 import { limit } from "../lib/text";
 
 export const handler: FunctionHandler = async (event, context) => {
-    const { post } = event.queryStringParameters;
+    const { post, type } = event.queryStringParameters;
 
     try {
         if(!post) throw new Error();
@@ -62,7 +64,7 @@ export const handler: FunctionHandler = async (event, context) => {
 
         // pfp
         svg.addChild(new Element("image", {
-            href: "https://media.antony.red/logoTransparent.png",
+            "xlink:href": LogoBase64,
             x: 10,
             y: 10,
             width: 170,
@@ -103,9 +105,10 @@ export const handler: FunctionHandler = async (event, context) => {
         return {
             statusCode: 200,
             headers: {
-                "Content-Type": "image/svg+xml"
+                "Content-Type": type !== "png" ? "image/svg+xml" : "image/png"
             },
-            body: svg.render()
+            body: type !== "png" ? svg.render() : (await sharp(Buffer.from(svg.render())).png().toBuffer()).toString("base64"),
+            isBase64Encoded: type === "png"
         }
     } catch {
         return {

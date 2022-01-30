@@ -6,7 +6,7 @@ export class Element {
 
     constructor(tag: string, attributes: { [key: string]: string | number } = {}) {
         this.tag = tag;
-        this.attributes = Object.assign({xmlns: "http://www.w3.org/2000/svg"}, attributes);
+        this.attributes = Object.assign({ xmlns: "http://www.w3.org/2000/svg", "xmlns:xlink": "http://www.w3.org/1999/xlink" }, attributes);
         this.children = [];
     }
 
