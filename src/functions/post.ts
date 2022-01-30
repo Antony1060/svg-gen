@@ -18,8 +18,10 @@ export const handler: FunctionHandler = async (event, context) => {
         const posts = rss.rss.channel.item;
         if(!posts || !Array.isArray(posts)) throw new Error();
 
-
-        const rssPost: { title: string, description: string } = posts.find(it => it.link.split("/").at(-1) === post);
+        const rssPost: { title: string, description: string } = posts.find(it => {
+            const split = it.link.split("/");
+            return split[split.length - 1].toLowerCase() === post.toLowerCase();
+        });
         if(!rssPost) throw new Error();
 
         const svg = new Element("svg", { width: 1200, height: 630 });
