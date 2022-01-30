@@ -110,10 +110,10 @@ export const handler: FunctionHandler = async (event, context) => {
             body: type !== "png" ? svg.render() : (await sharp(Buffer.from(svg.render())).png().toBuffer()).toString("base64"),
             isBase64Encoded: type === "png"
         }
-    } catch {
+    } catch(e) {
         return {
             statusCode: 500,
-            body: "Oops"
+            body: "Oops. Error: " + e.message
         }
     }
 }
