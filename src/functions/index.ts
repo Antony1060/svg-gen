@@ -1,6 +1,6 @@
 import { APIGatewayProxyEventV2, APIGatewayProxyResultV2, Handler } from "aws-lambda";
 
-type FunctionHandler = Handler<APIGatewayProxyEventV2, APIGatewayProxyResultV2>;
+export type FunctionHandler = Handler<APIGatewayProxyEventV2, APIGatewayProxyResultV2>;
 
 export const handler: FunctionHandler = async (event, context) => {
     return {
@@ -8,6 +8,6 @@ export const handler: FunctionHandler = async (event, context) => {
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({ hello: "world" })
+        body: JSON.stringify({ status: 200 })
     }
 }
