@@ -4,7 +4,7 @@ import fastify from "fastify";
 import fastifyCors from "fastify-cors";
 import { PostHandler } from "./routes/post";
 
-const DEBUG = !process.env.DISABLE_DEBUG && true;
+const DEBUG = !process.env.DISABLE_DEBUG;
 
 const logger = createLogger({
     "net": {
