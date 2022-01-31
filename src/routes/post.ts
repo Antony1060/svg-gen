@@ -12,8 +12,8 @@ export const PostHandler: FastifyPluginCallback = (fastify, opts, done) => {
         
         try {
             if(!query.title || !query.description) throw new Error();
-            const title = query.title;
-            const description = query.description;
+            const title = query.title as string + "aaaaaaaaaaaaaaa";
+            const description = query.description as string;
             const type = query.type ?? "svg";
 
             const svg = new Element("svg", { width: 1200, height: 630 });
@@ -29,7 +29,6 @@ export const PostHandler: FastifyPluginCallback = (fastify, opts, done) => {
 
                 .title {
                     font-family: "JetBrains Mono", monospace;
-                    font-size: 48px;
                     fill: white;
                 }
 
@@ -59,10 +58,10 @@ export const PostHandler: FastifyPluginCallback = (fastify, opts, done) => {
             // pfp
             svg.addChild(new Element("image", {
                 "xlink:href": formatHref(await fetchBase64("https://media.antony.red/logoTransparent.png")),
-                x: 10,
-                y: 10,
-                width: 170,
-                height: 170,
+                x: 20,
+                y: 20,
+                width: 150,
+                height: 150,
             }));
 
             // bottom text
@@ -75,24 +74,26 @@ export const PostHandler: FastifyPluginCallback = (fastify, opts, done) => {
 
             // title text
             svg.addChild(new Element("text", {
-                x: 200,
-                y: 280,
-                class: "title"
-            }).addChild(limit(title.trim(), 30)));
+                x: 180,
+                y: 300,
+                class: "title",
+                "font-size": title.length > 26 ? 46 : 56
+            }).addChild(limit(title.trim(), 32)));
 
             // divider
             svg.addChild(new Element("line", {
-                x1: 200,
-                y1: 310,
+                x1: 180,
+                y1: 330,
                 x2: 1080,
-                y2: 310,
-                stroke: "#45484d"
+                y2: 330,
+                stroke: "#45484d",
+                "stroke-width": 2
             }));
 
             // description text
             svg.addChild(new Element("text", {
-                x: 200,
-                y: 350,
+                x: 180,
+                y: 370,
                 class: "description"
             }).addChild(limit(description.trim(), 46)));
 
