@@ -12,7 +12,7 @@ export const PostHandler: FastifyPluginCallback = (fastify, opts, done) => {
         
         try {
             if(!query.title || !query.description) throw new Error();
-            const title = query.title as string + "aaaaaaaaaaaaaaa";
+            const title = query.title as string;
             const description = query.description as string;
             const type = query.type ?? "svg";
 
