@@ -1,17 +1,22 @@
-import { createLogger } from "@lvksh/logger";
+import { createLogger, shimLog } from "@lvksh/logger";
 import chalk from "chalk";
 import fastify from "fastify";
 import fastifyCors from "fastify-cors";
+import { fetchBase64 } from "./lib/SvgImg";
 import { PostHandler } from "./routes/post";
 
 const DEBUG = !process.env.DISABLE_DEBUG;
 
 const logger = createLogger({
-    "net": {
-        label: chalk.yellow`NET`,
-        divider: chalk.gray` | `
-    }
-}, { padding: "PREPEND" })
+    "net": chalk.yellow`NET`,
+    "console": chalk.greenBright`CONSOLE`
+}, { padding: "PREPEND", divider: chalk.gray` | ` });
+shimLog(logger, "console");
+
+// pre-fetch images
+((...imgs: string[]) =>
+    imgs.forEach(fetchBase64)
+)("https://media.antony.red/logoTransparent.png")
 
 const app = fastify();
 
