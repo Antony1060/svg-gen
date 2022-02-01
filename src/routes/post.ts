@@ -1,10 +1,9 @@
-import axios from "axios";
 import { FastifyPluginCallback } from "fastify";
 import sharp from "sharp";
 import { Element } from "../lib/Element";
 import { JetBrainsMonoCSS } from "../lib/Fonts";
 import { fetchBase64, formatHref } from "../lib/SvgImg";
-import { limit } from "../lib/text";
+import { limit, toSvgTextWrapped } from "../lib/text";
 
 export const PostHandler: FastifyPluginCallback = (fastify, opts, done) => {
     fastify.get("/post", async (req, res) => {
@@ -36,6 +35,7 @@ export const PostHandler: FastifyPluginCallback = (fastify, opts, done) => {
                     font-family: "JetBrains Mono", monospace;
                     font-size: 32px;
                     fill: #d1d1d3;
+                    width: 900px;
                 }
             `);
             svg.addChild(style);
@@ -77,7 +77,7 @@ export const PostHandler: FastifyPluginCallback = (fastify, opts, done) => {
                 x: 180,
                 y: 300,
                 class: "title",
-                "font-size": title.length > 26 ? 46 : 56
+                "font-size": title.length <= 20 ? 64 : title.length <= 26 ? 56 : 46
             }).addChild(limit(title.trim(), 32)));
 
             // divider
@@ -91,11 +91,15 @@ export const PostHandler: FastifyPluginCallback = (fastify, opts, done) => {
             }));
 
             // description text
-            svg.addChild(new Element("text", {
-                x: 180,
-                y: 370,
-                class: "description"
-            }).addChild(limit(description.trim(), 46)));
+            svg.addChild(toSvgTextWrapped(description, {
+                wrapAfter: 46,
+                yShift: 40,
+                attributes: {
+                    x: 180,
+                    y: 370,
+                    class: "description"
+                }
+            }));
 
             res.status(200).headers({
                 "Content-Type": type !== "png" ? "image/svg+xml" : "image/png"
