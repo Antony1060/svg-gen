@@ -5,6 +5,7 @@ import fastifyCors from "fastify-cors";
 
 import { fetchBase64 } from "./lib/SvgImg";
 import { CloudHandler } from "./routes/cloud";
+import { ContactHandler } from "./routes/contact";
 import { PostHandler } from "./routes/post";
 
 const DEBUG = !process.env.DISABLE_DEBUG;
@@ -36,6 +37,7 @@ app.addHook("onRequest", (req, _, next) => {
 
 app.register(PostHandler);
 app.register(CloudHandler);
+app.register(ContactHandler);
 
 app.get("/", (_, res) => {
     res.send({ status: 200 });
