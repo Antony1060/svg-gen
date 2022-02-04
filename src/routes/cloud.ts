@@ -2,6 +2,7 @@ import axios from "axios";
 import { XMLParser } from "fast-xml-parser";
 import { FastifyPluginCallback } from "fastify";
 import { logger } from "../app";
+import { BasicColors } from "../lib/Colors";
 
 import { Element } from "../lib/Element";
 import { JetBrainsMonoCSS } from "../lib/Fonts";
@@ -56,7 +57,7 @@ export const CloudHandler: FastifyPluginCallback = (fastify, _, done) => {
             }
 
             .bottom .highlight {
-                fill: #54C1FE;
+                fill: ${BasicColors.blue};
             }
         `);
 

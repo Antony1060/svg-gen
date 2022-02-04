@@ -1,5 +1,6 @@
 import axios from "axios";
 import { FastifyPluginCallback } from "fastify";
+import { BasicColors } from "../lib/Colors";
 import { Element } from "../lib/Element";
 import { JetBrainsMonoCSS } from "../lib/Fonts";
 
@@ -43,7 +44,7 @@ export const DomainsHandler: FastifyPluginCallback = (fastify, _, done) => {
             }
 
             .bottom .highlight {
-                fill: #54C1FE;
+                fill: ${BasicColors.blue};
             }
         `);
 
