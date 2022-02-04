@@ -54,8 +54,8 @@ export const DomainsHandler: FastifyPluginCallback = (fastify, _, done) => {
 
         // background
         svg.addChild(`
-            <rect width="480" height="120" fill="url(#bgGradiend)"/>
-            <linearGradient id="bgGradiend" x1="-480" y1="-120" x2="5.72021" y2="494.74" gradientUnits="userSpaceOnUse">
+            <rect width="480" height="120" fill="url(#bgGradient)"/>
+            <linearGradient id="bgGradient" x1="-480" y1="-120" x2="5.72021" y2="494.74" gradientUnits="userSpaceOnUse">
                 <stop offset="0.109375" stop-color="#0A0D13"/>
                 <stop offset="1" stop-color="#282C32"/>
             </linearGradient>

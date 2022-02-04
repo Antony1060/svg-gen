@@ -33,8 +33,8 @@ export const ContactHandler: FastifyPluginCallback = (fastify, _, done) => {
 
         // background
         svg.addChild(`
-            <rect width="480" height="120" fill="url(#bgGradiend)"/>
-            <linearGradient id="bgGradiend" x1="-520" y1="1.27501e-05" x2="-9.2052" y2="634.085" gradientUnits="userSpaceOnUse">
+            <rect width="480" height="120" fill="url(#bgGradient)"/>
+            <linearGradient id="bgGradient" x1="-520" y1="1.27501e-05" x2="-9.2052" y2="634.085" gradientUnits="userSpaceOnUse">
                 <stop offset="0.109375" stop-color="#0A0D13"/>
                 <stop offset="1" stop-color="#282C32"/>
             </linearGradient>
