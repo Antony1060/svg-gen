@@ -14,6 +14,7 @@
         "@types/sharp": "^0.29.5",
         "axios": "0.25.0",
         "chalk": "4",
+        "dotenv": "^16.0.0",
         "fast-xml-parser": "^4.0.2",
         "fastify": "^3.27.0",
         "fastify-cors": "^6.0.2",

@@ -9,6 +9,8 @@ import { ContactHandler } from "./routes/contact";
 import { DomainsHandler } from "./routes/domains";
 import { GithubHandler } from "./routes/github";
 import { PostHandler } from "./routes/post";
+import { config as dotenvConfig } from "dotenv";
+dotenvConfig();
 
 const DEBUG = !process.env.DISABLE_DEBUG;
 
