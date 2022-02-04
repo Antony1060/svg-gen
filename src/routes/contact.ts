@@ -41,13 +41,13 @@ export const ContactHandler: FastifyPluginCallback = (fastify, _, done) => {
         `);
 
         svg.addChild(new Element("text", {
-            x: 110,
+            x: 88,
             y: 62,
             class: "title"
         }).addChild("antony.contact"));
 
         svg.addChild(new Element("text", {
-            x: 207,
+            x: 182,
             y: 89,
             class: "bottom"
         }).addChild("ring ring..."));

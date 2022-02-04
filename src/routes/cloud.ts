@@ -9,7 +9,7 @@ import { JetBrainsMonoCSS } from "../lib/Fonts";
 let postCount = 0;
 
 const updatePostCount = async () => {
-    const raw: false | string = await axios.get("https://antony.cloud/rss.xml").then((req) => req.data).catch(() => false);
+    const raw: false | string = await axios.get("https://antony.cloud/rss.xml").then(req => req.data).catch(() => false);
     if (!raw) return;
 
     try {
@@ -78,7 +78,7 @@ export const CloudHandler: FastifyPluginCallback = (fastify, _, done) => {
         }).addChild("antony.cloud"));
 
         svg.addChild(new Element("text", {
-            x: postCount == 1 ? 215 : 207,
+            x: postCount == 1 ? 211 : 203,
             y: 89,
             class: "bottom"
         })
