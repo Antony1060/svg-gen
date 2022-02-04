@@ -9,9 +9,10 @@ import { PostHandler } from "./routes/post";
 
 const DEBUG = !process.env.DISABLE_DEBUG;
 
-const logger = createLogger(
+export const logger = createLogger(
     {
         net: chalk.yellow`NET`,
+        timer: chalk.redBright`TIMER`,
         console: chalk.greenBright`CONSOLE`
     },
     { padding: "PREPEND", divider: chalk.gray` | ` }

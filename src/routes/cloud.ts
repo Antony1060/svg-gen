@@ -1,6 +1,7 @@
 import axios from "axios";
 import { XMLParser } from "fast-xml-parser";
 import { FastifyPluginCallback } from "fastify";
+import { logger } from "../app";
 
 import { Element } from "../lib/Element";
 import { JetBrainsMonoCSS } from "../lib/Fonts";
@@ -19,7 +20,7 @@ const updatePostCount = async () => {
         const item = parsed.rss?.channel?.item;
 
         postCount = Array.isArray(item) ? item.length : 1;
-        console.log("Updated cloud post count " + postCount);
+        logger.timer("Updated cloud post count " + postCount);
         // eslint-disable-next-line no-empty
     } catch {}
 };
