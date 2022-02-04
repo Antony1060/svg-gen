@@ -1,5 +1,6 @@
 import axios from "axios";
 import { FastifyPluginCallback } from "fastify";
+import { logger } from "../app";
 import { BasicColors } from "../lib/Colors";
 import { Element } from "../lib/Element";
 import { JetBrainsMonoCSS } from "../lib/Fonts";
@@ -11,11 +12,12 @@ const updateDomainCount = async () => {
     if(!data) return
 
     domainCount = data.domains.length;
+    logger.timer("Updated domain count " + domainCount);
 };
 
 // update every 10 minutes
 setInterval(updateDomainCount, 10 * 60 * 1000);
-updateDomainCount();
+setTimeout(updateDomainCount, 2000);
 
 export const DomainsHandler: FastifyPluginCallback = (fastify, _, done) => {
     fastify.get("/domains", (_, res) => {

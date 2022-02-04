@@ -1,7 +1,43 @@
+import axios from "axios";
 import { FastifyPluginCallback } from "fastify";
+import { logger } from "../app";
 import { BasicColors } from "../lib/Colors";
 import { Element } from "../lib/Element";
 import { JetBrainsMonoCSS } from "../lib/Fonts";
+
+type UserRepoData = {
+    public: number,
+    private: number
+}
+
+let repoData: UserRepoData = {
+    public: 0,
+    private: 0
+}
+
+const updateRepoData = async () => {
+    const token = process.env.GITHUB_TOKEN;
+    if(!token)
+        return logger.timer("Failed to update repo count, missing GITHUB_TOKEN");
+
+    const data: false | { private: boolean, owner: { login: string } }[] = await axios.get("https://api.github.com/user/repos?per_page=100", {
+        headers: {
+            "Authorization": `token ${token}`
+        }
+    }).then(req => req.data).catch(() => false);
+    if(!data) return;
+    const filtered = data.filter(it => it.owner.login === "Antony1060");
+
+    repoData = {
+        public: filtered.filter(it => !it.private).length,
+        private: filtered.filter(it => it.private).length
+    }
+    logger.timer("Updated github repo count", repoData);
+}
+
+setInterval(updateRepoData, 10 * 60 * 1000);
+setTimeout(updateRepoData, 2000);
+
 
 export const GithubHandler: FastifyPluginCallback = (fastify, _, done) => {
     fastify.get("/github", (_, res) => {
@@ -73,13 +109,13 @@ export const GithubHandler: FastifyPluginCallback = (fastify, _, done) => {
             class: "bottom"
         })
             .addChild(new Element("tspan", { class: "highlight" })
-                .addChild(43 + ""))
+                .addChild((repoData.public + repoData.private) + ""))
             .addChild(" repos (")
             .addChild(new Element("tspan", { class: "public" })
-                .addChild(12 + " public"))
+                .addChild(repoData.public + " public"))
             .addChild(", ")
             .addChild(new Element("tspan", { class: "private" })
-                .addChild(31 + " private"))
+                .addChild(repoData.private + " private"))
             .addChild(")"));
 
         res.status(200)

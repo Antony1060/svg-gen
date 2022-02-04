@@ -28,7 +28,7 @@ const updatePostCount = async () => {
 
 // update every 10 minutes
 setInterval(updatePostCount, 10 * 60 * 1000);
-updatePostCount();
+setTimeout(updatePostCount, 2000);
 
 export const CloudHandler: FastifyPluginCallback = (fastify, _, done) => {
     fastify.get("/cloud", (_, res) => {
