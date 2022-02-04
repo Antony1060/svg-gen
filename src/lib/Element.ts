@@ -8,13 +8,13 @@ export class Element {
         attributes: { [key: string]: string | number } = {}
     ) {
         this.tag = tag;
-        this.attributes = Object.assign(
+        this.attributes = tag === "svg" ? Object.assign(
             {
                 xmlns: "http://www.w3.org/2000/svg",
                 "xmlns:xlink": "http://www.w3.org/1999/xlink"
             },
             attributes
-        );
+        ) : attributes;
         this.children = [];
     }
 

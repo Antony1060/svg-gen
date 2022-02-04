@@ -4,6 +4,7 @@ import fastify from "fastify";
 import fastifyCors from "fastify-cors";
 
 import { fetchBase64 } from "./lib/SvgImg";
+import { CloudHandler } from "./routes/cloud";
 import { PostHandler } from "./routes/post";
 
 const DEBUG = !process.env.DISABLE_DEBUG;
@@ -32,10 +33,15 @@ app.addHook("onRequest", (req, _, next) => {
     next();
 });
 
-app.register(PostHandler, { prefix: "/" });
+app.register(PostHandler);
+app.register(CloudHandler);
 
 app.get("/", (_, res) => {
     res.send({ status: 200 });
+});
+
+app.setErrorHandler((_, __, res) => {
+    res.status(500).send("Oops");
 });
 
 app.listen(process.env.PORT || 8080, "0.0.0.0", (err, addr) => {
