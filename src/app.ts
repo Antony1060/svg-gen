@@ -39,6 +39,12 @@ app.addHook("onRequest", (req, _, next) => {
     next();
 });
 
+app.addHook("onRequest", (_, res, next) => {
+    res.header("Cache-Control", "no-cache");
+
+    next();
+})
+
 app.register(PostHandler);
 app.register(CloudHandler);
 app.register(ContactHandler);
