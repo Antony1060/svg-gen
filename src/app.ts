@@ -5,11 +5,11 @@ import fastifyCors from "fastify-cors";
 
 import { fetchBase64 } from "./lib/SvgImg";
 import { CloudHandler } from "./routes/cloud";
-import { ContactHandler } from "./routes/contact";
 import { DomainsHandler } from "./routes/domains";
 import { GithubHandler } from "./routes/github";
 import { PostHandler } from "./routes/post";
 import { config as dotenvConfig } from "dotenv";
+import { WikiHandler } from "./routes/wiki";
 dotenvConfig();
 
 const DEBUG = !process.env.DISABLE_DEBUG;
@@ -47,7 +47,7 @@ app.addHook("onRequest", (_, res, next) => {
 
 app.register(PostHandler);
 app.register(CloudHandler);
-app.register(ContactHandler);
+app.register(WikiHandler);
 app.register(GithubHandler);
 app.register(DomainsHandler);
 

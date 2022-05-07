@@ -2,8 +2,9 @@ import { FastifyPluginCallback } from "fastify";
 import { Element } from "../lib/Element";
 import { JetBrainsMonoCSS } from "../lib/Fonts";
 
-export const ContactHandler: FastifyPluginCallback = (fastify, _, done) => {
-    fastify.get("/contact", (_, res) => {
+// should probably make this more better at some point
+export const WikiHandler: FastifyPluginCallback = (fastify, _, done) => {
+    fastify.get("/wiki", (_, res) => {
         const svg = new Element("svg", {
             width: 480,
             height: 120
@@ -41,16 +42,16 @@ export const ContactHandler: FastifyPluginCallback = (fastify, _, done) => {
         `);
 
         svg.addChild(new Element("text", {
-            x: 88,
+            x: 120,
             y: 62,
             class: "title"
-        }).addChild("antony.contact"));
+        }).addChild("antony.wiki"));
 
         svg.addChild(new Element("text", {
-            x: 182,
+            x: 171,
             y: 89,
             class: "bottom"
-        }).addChild("ring ring..."));
+        }).addChild("/in/antony1060"));
 
         res.status(200)
             .headers({
