@@ -1,17 +1,19 @@
-FROM node:16-alpine
+FROM node:hydrogen-alpine
 
 WORKDIR /app
 
 RUN apk add font-jetbrains-mono-nerd
 
 COPY ./package.json .
-COPY ./yarn.lock .
+COPY ./pnpm-lock.yaml .
 COPY ./tsconfig.json .
 
-RUN yarn install --production
+RUN npm install --global pnpm
+
+RUN pnpm install
 
 COPY ./src ./src
 
 EXPOSE 8080
 
-CMD [ "yarn", "start" ]
+CMD [ "pnpm", "start" ]
