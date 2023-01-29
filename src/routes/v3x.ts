@@ -1,10 +1,13 @@
 import { FastifyPluginCallback } from "fastify";
 import { Element } from "../lib/Element";
 import { JetBrainsMonoCSS } from "../lib/Fonts";
+import { fetchBase64, formatHref } from "../lib/SvgImg";
 
-// should probably make this better at some point
-export const WikiHandler: FastifyPluginCallback = (fastify, _, done) => {
-    fastify.get("/wiki", (_, res) => {
+const V3XLightLogoAspectRatio = 718 / 204;
+const LogoHeight = 42;
+
+export const V3XHandler: FastifyPluginCallback = (fastify, _, done) => {
+    fastify.get("/v3x", async (_, res) => {
         const svg = new Element("svg", {
             width: 480,
             height: 120
@@ -35,30 +38,39 @@ export const WikiHandler: FastifyPluginCallback = (fastify, _, done) => {
         // background
         svg.addChild(`
             <rect width="480" height="120" fill="url(#bgGradient)"/>
-            <linearGradient id="bgGradient" x1="-520" y1="1.27501e-05" x2="-9.2052" y2="634.085" gradientUnits="userSpaceOnUse">
+            <linearGradient id="bgGradient" x1="-480" y1="-120" x2="5.72021" y2="494.74" gradientUnits="userSpaceOnUse">
                 <stop offset="0.109375" stop-color="#0A0D13"/>
                 <stop offset="1" stop-color="#282C32"/>
             </linearGradient>
         `);
 
-        svg.addChild(new Element("text", {
-            x: 120,
-            y: 62,
-            class: "title"
-        }).addChild("antony.wiki"));
+        svg.addChild(
+            new Element("image", {
+                "xlink:href": formatHref(
+                    await fetchBase64(
+                        "https://media.antony.red/v3xLight.png"
+                    )
+                ),
+                x: (480 - LogoHeight * V3XLightLogoAspectRatio) / 2,
+                y: 24,
+                width: LogoHeight * V3XLightLogoAspectRatio,
+                height: LogoHeight
+            })
+        );
 
         svg.addChild(new Element("text", {
-            x: 171,
+            x: 134,
             y: 89,
             class: "bottom"
-        }).addChild("/in/antony1060"));
+        })
+            .addChild("Research &amp; Development"));
 
         res.status(200)
             .headers({
                 "Content-Type": "image/svg+xml"
             })
             .send(svg.render());
-    });
+    })
 
-    done();
-};
+    done()
+}

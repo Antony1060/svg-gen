@@ -49,7 +49,7 @@ export const PostHandler: FastifyPluginCallback = (fastify, _, done) => {
             </linearGradient>
         `);
 
-        // backround
+        // background
         svg.addChild(
             new Element("rect", {
                 height: 630,

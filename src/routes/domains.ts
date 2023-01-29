@@ -4,6 +4,7 @@ import { logger } from "../app";
 import { BasicColors } from "../lib/Colors";
 import { Element } from "../lib/Element";
 import { JetBrainsMonoCSS } from "../lib/Fonts";
+import { deprecate } from "util";
 
 let domainCount = 0;
 
