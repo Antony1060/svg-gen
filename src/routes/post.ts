@@ -122,7 +122,9 @@ export const PostHandler: FastifyPluginCallback = (fastify, _, done) => {
         });
 
         if (type !== "png") res.send(svg.render());
-        else res.send(sharp(Buffer.from(svg.render())).png());
+        else res.send(
+            await sharp(Buffer.from(svg.render())).png().toBuffer()
+        );
     });
 
     done();
