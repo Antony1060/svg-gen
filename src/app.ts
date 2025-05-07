@@ -28,8 +28,7 @@ shimLog(logger, "console");
 // pre-fetch images
 // eslint-disable-next-line unicorn/no-array-for-each
 ((...imgs: string[]) => imgs.forEach(fetchBase64))(
-  "https://media.antony.red/logoTransparent.png",
-  "https://media.antony.red/v3xLight.png"
+  "https://media.antony.red/logoTransparent.png"
 );
 
 const app = fastify();
