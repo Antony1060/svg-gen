@@ -1,4 +1,4 @@
-FROM node:hydrogen-alpine
+FROM node:jod-alpine
 
 WORKDIR /app
 
@@ -10,7 +10,9 @@ COPY ./tsconfig.json .
 
 RUN npm install --global pnpm
 
-RUN pnpm install
+# TODO: figure out why this doesn't work
+#RUN pnpm install
+RUN npm install
 
 COPY ./src ./src
 

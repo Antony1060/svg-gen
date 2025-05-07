@@ -36,8 +36,13 @@ importers:
         specifier: 4.12.0
         version: 4.12.0
       sharp:
+<<<<<<< HEAD
         specifier: ^0.32.1
         version: 0.32.6
+=======
+        specifier: 0.31.3
+        version: 0.31.3
+>>>>>>> b348e0d (Update Dockerfile)
       ts-node:
         specifier: 10.9.1
         version: 10.9.1(@types/node@18.11.18)(typescript@4.9.5)
