@@ -51,7 +51,7 @@ export const WikiHandler: FastifyPluginCallback = (fastify, _, done) => {
 
     svg.addChild(
       new Element("text", {
-        x: 171,
+        x: 141,
         y: 89,
         class: "bottom",
       }).addChild("/in/antoniotrstenjak")
