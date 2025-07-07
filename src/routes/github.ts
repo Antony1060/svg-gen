@@ -15,23 +15,49 @@ let repoData: UserRepoData = {
   private: 0,
 };
 
+type GithubRepo = { private: boolean; owner: { login: string } };
+
+const getGithubRepos = async (token: string): Promise<false | GithubRepo[]> => {
+  const PER_PAGE = 100;
+  let page = 1;
+
+  const response: GithubRepo[] = [];
+
+  while (true) {
+    const data = await axios
+      .get(
+        `https://api.github.com/user/repos?page=${page}&per_page=${PER_PAGE}`,
+        {
+          headers: {
+            Authorization: `token ${token}`,
+          },
+        }
+      )
+      .then((req) => req.data as GithubRepo[])
+      .catch((err) => {
+        console.log(err);
+        return false as const;
+      });
+
+    if (!data) return false;
+
+    response.push(...data);
+
+    if (data.length < PER_PAGE) break;
+
+    page++;
+  }
+
+  return response;
+};
+
 const updateRepoData = async () => {
   const token = process.env.GITHUB_TOKEN;
   if (!token)
     return logger.timer("Failed to update repo count, missing GITHUB_TOKEN");
 
-  const data: false | { private: boolean; owner: { login: string } }[] =
-    await axios
-      .get("https://api.github.com/user/repos?per_page=100", {
-        headers: {
-          Authorization: `token ${token}`,
-        },
-      })
-      .then((req) => req.data)
-      .catch((err) => {
-        console.log(err);
-        return false;
-      });
+  const data = await getGithubRepos(token);
+
   if (!data) return;
   const filtered = data.filter((it) => it.owner.login === "Antony1060");
 
